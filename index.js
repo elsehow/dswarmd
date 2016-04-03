@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 function usage () {
-  return 'USAGE: dswarmd -k keys.json -n "my-device-name"\n\nGenerate a keys.json file with ssb-keys generate().'
+  return 'USAGE: dswarmd -k keys.json -n "my-device-name"\n\nGenerate a keys.json file with ssb-keys generate().\n\nOptional arguments:\n\n-u  URL to check for global IP address.\n\n-i   Set interval to check url (ms).'
 }
 var argv = require('minimist')(process.argv.slice(2))
 if (!argv.k) {
@@ -17,38 +17,25 @@ if (!deviceName || !deviceName.length) {
   console.log(usage())
   process.exit(1)
 }
-var wrtc = require('electron-webrtc')()
-var swarmlog = require('swarmlog')
-var sub = require('subleveldown')
-var level = require('level')
-var db = level('/tmp/kv.db')
-var log = swarmlog({
+var opts = {
   keys: keys,
   sodium: require('chloride/browser'),
-  db: sub(db, 'log'),
-  wrtc: wrtc,
   valueEncoding: 'json',
   hubs: [ 'https://signalhub.mafintosh.com' ]
-})
-var hyperkv = require('hyperkv')
-var kv = hyperkv({
-  log: log,
-  db: sub(db, 'kv')
-})
-var myipS = require('my-ip-kefir')
-var Kefir = require('kefir')
-function putS (ip) {
-  return Kefir.fromNodeCallback(cb => {
-    kv.put(deviceName, ip, cb)
-  })
 }
-myipS(1000, 'http://ipv6bot.whatismyipaddress.com/')
-  .filter(x=>!!x) // truthy values only
-  .skipDuplicates()
-  .flatMap(ip => {
-    return putS(ip)
-  })
-  .map(n => n.value.v)
+
+require('./lib')(opts,argv.n,argv.i,argv.u)
   .onValue(ip => {
     console.log(`[${deviceName}] ${ip}`)
   })
+
+var spawn = require('electron-spawn')
+var electron = spawn('lib.js', opts, deviceName, argv.i, argv.u, {
+  detached: true
+})
+electron.stderr.on('data', function (data) {
+  console.error(data.toString())
+})
+electron.stdout.on('data', function (data) {
+  console.log(data.toString())
+})

@@ -19,9 +19,12 @@
   },
   "dependencies": {
     "chloride": "^2.1.1",
-    "electron-webrtc": "^0.1.1",
+    "electron-prebuilt": "^0.37.4",
+    "electron-spawn": "^4.1.1",
     "hyperkv": "^1.5.2",
+    "is-browser": "^2.0.1",
     "level": "^1.4.0",
+    "level-browserify": "^1.1.0",
     "minimist": "^1.2.0",
     "my-ip-kefir": "^1.0.2",
     "subleveldown": "^2.1.0",
