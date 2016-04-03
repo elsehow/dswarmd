@@ -35,7 +35,20 @@ var kv = hyperkv({
   log: log,
   db: sub(db, 'kv')
 })
-var ipkv = require('my-ip-kv')
-ipkv(kv, deviceName)
+var myipS = require('my-ip-kefir')
+var Kefir = require('kefir')
+function putS (ip) {
+  return Kefir.fromNodeCallback(cb => {
+    kv.put(deviceName, ip, cb)
+  })
+}
+myipS(1000, 'http://ipecho.net/plain')
+  .filter(x=>!!x) // truthy values only
+  .skipDuplicates()
+  .flatMap(ip => {
+    return putS(ip)
+  })
   .map(n => n.value.v)
-  .log(deviceName)
+  .onValue(ip => {
+    console.log(`[${deviceName}] ${ip}`)
+  })
