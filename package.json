@@ -1,15 +1,15 @@
 {
   "author": "elsehow",
   "license": "BSD-3-Clause",
-  "main": "src/index.js",
+  "main": "lib.js",
   "bin": {
-    "dswarmd": "./index.js"
+    "dswarmd": "./cli.js"
   },
   "watch": {
     "test": "*.js"
   },
   "scripts": {
-    "test": "./index.js -k keys.json -n \"my-device\"",
+    "test": "./cli.js -k keys.json -n \"my-device\"",
     "watch": "npm-watch",
     "generate-keys": "node -pe \"JSON.stringify(require('ssb-keys').generate())\" > keys.json"
   },
@@ -24,9 +24,8 @@
     "hyperkv": "^1.5.2",
     "is-browser": "^2.0.1",
     "level": "^1.4.0",
-    "level-browserify": "^1.1.0",
     "minimist": "^1.2.0",
-    "my-ip-kefir": "^1.0.2",
+    "my-ip-kefir": "^1.0.3",
     "subleveldown": "^2.1.0",
     "swarmlog": "^1.4.0"
   },
