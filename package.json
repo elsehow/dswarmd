@@ -3,13 +3,25 @@
   "license": "BSD-3-Clause",
   "main": "src/index.js",
   "watch": {
-    "test": "{src,test}/*.js"
+    "test": "*.js"
   },
   "scripts": {
-    "test": "node test/*.js",
-    "watch": "npm-watch"
+    "test": "./index.js -k keys.json -n \"my-device\"",
+    "watch": "npm-watch",
+    "generate-keys": "node -pe \"JSON.stringify(require('ssb-keys').generate())\" > keys.json"
   },
   "devDependencies": {
-    "npm-watch": "^0.1.3"
+    "npm-watch": "^0.1.3",
+    "ssb-keys": "^5.0.1"
+  },
+  "dependencies": {
+    "chloride": "^2.1.1",
+    "electron-webrtc": "^0.1.1",
+    "hyperkv": "^1.5.2",
+    "level": "^1.4.0",
+    "minimist": "^1.2.0",
+    "my-ip-kv": "^1.0.0",
+    "subleveldown": "^2.1.0",
+    "swarmlog": "^1.4.0"
   }
 }
