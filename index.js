@@ -42,7 +42,7 @@ function putS (ip) {
     kv.put(deviceName, ip, cb)
   })
 }
-myipS(1000, 'http://ipecho.net/plain')
+myipS(1000, 'http://ipv6bot.whatismyipaddress.com/')
   .filter(x=>!!x) // truthy values only
   .skipDuplicates()
   .flatMap(ip => {
