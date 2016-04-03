@@ -23,13 +23,13 @@
     "hyperkv": "^1.5.2",
     "level": "^1.4.0",
     "minimist": "^1.2.0",
-    "my-ip-kv": "^1.0.0",
+    "my-ip-kv": "^1.0.2",
     "subleveldown": "^2.1.0",
     "swarmlog": "^1.4.0"
   },
   "name": "dswarmd",
   "description": "device swarm daemon",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/elsehow/dswarmd.git"
